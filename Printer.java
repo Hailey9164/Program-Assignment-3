@@ -25,10 +25,10 @@ public class Printer {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i >= j)
-                    System.out.print("- ");
+                    System.out.printf("%4s", "-");
                 else
-                    System.out.print(opt[i][j] + " ");
-            }
+                    System.out.printf("%4d", opt[i][j]);
+                }
             System.out.println();
         }
         System.out.println();
