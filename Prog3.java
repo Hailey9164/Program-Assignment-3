@@ -2,27 +2,32 @@
 /* Hailey Campbell                                            */
 /* Login ID: 018392504                                        */
 /* CS 3310, Spring 2026                                       */
-/* Programming Assignment 1                                   */
-/* Prog1 class: main driver for reading graphs from a file,   */
-/* computing connected components and cycles, and printing    */
-/* formatted results.                                         */
+/* Programming Assignment 3                                   */
+/* Prog3 class: Main driver for the canoe rental optimization */
+/*              program. Read the input filename from the     */
+/*              command line. Construct the Read object       */
+/*              (reads input file). Run the dynamic           */
+/*              programming optimizer. Print the optimal cost */
+/*              matrix. Print the optimal rental path from    */
+/*              post 0 to post n-1                            */
 /**************************************************************/
-
 
 public class Prog3 {
 
-/**
- * Main
- * ----
- * Driver class for the canoe rental optimization program.
- * 
- * Responsibilities:
- *  - Read the input filename from the command line
- *  - Construct the Read object (reads input file)
- *  - Run the dynamic programming optimizer
- *  - Print the optimal cost matrix
- *  - Print the optimal rental path from post 0 to post n-1
- */
+        /**********************************************************/
+        /* Method: main                                           */
+        /* Purpose: Main driver for the canoe rental optimization */
+        /*          program. Read the input filename from the     */
+        /*          command line. Construct the Read object       */
+        /*          (reads input file). Run the dynamic           */
+        /*          programming optimizer. Print the optimal cost */
+        /*          matrix. Print the optimal rental path from    */
+        /*          post 0 to post n-1                            */
+        /* Parameters:                                            */
+        /*   String[] args: command line arguments (expects one   */
+        /*                   filename)                            */
+        /* Returns: none                                          */
+        /**********************************************************/
     public static void main(String[] args) {
         // Ensure the user provides exactly one filename
         if (args.length != 1) {

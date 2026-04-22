@@ -2,23 +2,18 @@
 /* Hailey Campbell                                            */
 /* Login ID: 018392504                                        */
 /* CS 3310, Spring 2026                                       */
-/* Programming Assignment 1                                   */
-/* Prog1 class: main driver for reading graphs from a file,   */
-/* computing connected components and cycles, and printing    */
-/* formatted results.                                         */
+/* Programming Assignment 3                                   */
+/* Optimizer class: Uses dynamic programming algorithm that   */
+/*                  computes opt[i][j] = minimum cost to      */
+/*                  travel from i to j. Builds nextStop [i][j]*/
+/*                  table that records which intermediate post*/
+/*                  k gives the optimal solution. This        */
+/*                  allows reconstruction of the actual rental*/
+/*                  sequence.                                 */
 /**************************************************************/
 import java.util.*;
 
-/**
- * Optimizer
- * --------------
- * Implements the dynamic programming algorithm that computes:
- *   opt[i][j] = minimum cost to travel from post i to post j
- *
- * Also builds a nextStop[i][j] table that records which intermediate
- * post k gives the optimal solution. This allows reconstruction of
- * the actual rental sequence.
- */
+
 public class Optimizer {
 
     private int n;              // Number of posts
@@ -26,35 +21,37 @@ public class Optimizer {
     private int[][] opt;        // Optimal cost matrix
     private int[][] nextStop;   // Stores best intermediate stop k
 
-    /** Constructor: initializes DP tables using the cost matrix */
     /**********************************************************/
-    /* Method: sortedLetters                                  */
-    /* Purpose: Return sorted characters of a word            */
+    /* Method: Optimizer    (Constructor)                     */
+    /* Purpose: Loads the input cost matrix. Stores the       */
+    /*          number of posts. Allocates the opt table for  */
+    /*          optimal costs. Allocates the opt table for    */
+    /*          path reconstruction                           */
     /* Parameters:                                            */
-    /*   String word: word to sort                            */
-    /* Returns: String: sorted version                        */
+    /*   Read: the data from the input file                   */
+    /* Returns: none                                          */
     /**********************************************************/
     public Optimizer(Read cm) {
-        this.C = cm.getMatrix();
+        // stores the cost matrix from the Read object
+        this.C = cm.getMatrix();  
+        // number of posts  
         this.n = cm.getN();
+        // allocate tables for optimal costs and path reconstruction
         this.opt = new int[n][n];
+        // nextStop[i][j] will store the intermediate post k that 
+        // gives the optimal cost from i to j
         this.nextStop = new int[n][n];
     }
 
-    /**
-     * Computes the optimal cost matrix using dynamic programming.
-     *
-     * Recurrence:
-     *   opt[i][j] = min over k ( C[i][k] + opt[k][j] )
-     *
-     * We fill the table by increasing interval length.
-     */
     /**********************************************************/
-    /* Method: sortedLetters                                  */
-    /* Purpose: Return sorted characters of a word            */
-    /* Parameters:                                            */
-    /*   String word: word to sort                            */
-    /* Returns: String: sorted version                        */
+    /* Method: compute                                        */
+    /* Purpose: Compute the optimal cost matrix using dynamic */
+    /*          programming. Fill in table by increasing      */
+    /*          interval length.                              */
+    /*          Recurrence realation: opt[i][j] = min over k  */
+    /*          (C[i][k] +opt[k][j]).                         */
+    /* Parameters: None                                       */
+    /* Returns: None                                          */
     /**********************************************************/
     public void compute() {
         // Base case: cost from i to i is zero
@@ -79,7 +76,7 @@ public class Optimizer {
                         bestK = k;
                     }
                 }
-
+            
                 opt[i][j] = best;
                 nextStop[i][j] = bestK;
             }
@@ -87,22 +84,20 @@ public class Optimizer {
     }
 
     /**********************************************************/
-    /* Method: sortedLetters                                  */
-    /* Purpose: Return sorted characters of a word            */
-    /* Parameters:                                            */
-    /*   String word: word to sort                            */
-    /* Returns: String: sorted version                        */
+    /* Method: getOptMatrix                                   */
+    /* Purpose: Return the opt matrix                         */
+    /* Parameters: None                                       */
+    /* Returns: opt: opt                                   */
     /**********************************************************/
     public int[][] getOptMatrix() {
         return opt;
     }
 
     /**********************************************************/
-    /* Method: sortedLetters                                  */
-    /* Purpose: Return sorted characters of a word            */
-    /* Parameters:                                            */
-    /*   String word: word to sort                            */
-    /* Returns: String: sorted version                        */
+    /* Method: getNextMatrix                                  */
+    /* Purpose: Return nextStop                               */
+    /* Parameters: None                                       */
+    /* Returns: nextStop: nextStop                            */
     /**********************************************************/
     public int[][] getNextMatrix() {
         return nextStop;

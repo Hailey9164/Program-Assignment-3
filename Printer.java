@@ -2,29 +2,25 @@
 /* Hailey Campbell                                            */
 /* Login ID: 018392504                                        */
 /* CS 3310, Spring 2026                                       */
-/* Programming Assignment 1                                   */
-/* Prog1 class: main driver for reading graphs from a file,   */
-/* computing connected components and cycles, and printing    */
-/* formatted results.                                         */
+/* Programming Assignment 3                                   */
+/* Printer class: Utility for printing the optimal cost       */
+/*                matrix. Entries where i >= j are printed as */
+/*                "-" since they are not valid.               */        
 /**************************************************************/
-/**
- * Printer
- * -------------
- * Utility class for printing the optimal cost matrix.
- * Entries where i >= j are printed as "-" since they are not valid.
- */
+
 public class Printer {
 
-        /**********************************************************/
-    /* Method: sortedLetters                                  */
-    /* Purpose: Return sorted characters of a word            */
+    /**********************************************************/
+    /* Method: printOptimalMatrix                             */
+    /* Purpose: Print the optimal cost matrix                 */
     /* Parameters:                                            */
-    /*   String word: word to sort                            */
-    /* Returns: String: sorted version                        */
+    /*   int[][] opt: the optimal cost matrix                 */
+    /* Returns: none                                          */
     /**********************************************************/
     public static void printOptimalMatrix(int[][] opt) {
-        int n = opt.length;
+        int n = opt.length; // number of posts is the size of the matrix
 
+        // Print the optimal cost matrix with formatting
         System.out.println("Optimal Cost Matrix:");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
