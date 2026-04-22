@@ -1,0 +1,133 @@
+/**************************************************************/
+/* Hailey Campbell                                            */
+/* Login ID: 018392504                                        */
+/* CS 3310, Spring 2026                                       */
+/* Programming Assignment 3                                   */
+/* ANALYSIS: an analysis of your program, including:	      */
+/*	– A description of the (recursive) formula used to    */
+/*	  calculate the optimal costs between posts	      */
+/*	– A theoretical analysis of the run time of your      */
+/*	  program, based upon that recursive formula. 	      */
+/**************************************************************/
+
+1. A description of the (recursive) formula used to calculate 
+the optimal costs between posts.
+
+To compute the minimum cost of traveling from post i to post j, 
+the algorithm uses the following recursive definition:
+
+Base Case:
+A traveler already at post i with no distance to travel has zero 
+cost:
+
+opt[𝑖][𝑖]=0 
+This anchors the recursion.
+
+
+
+Recursive Case:
+If the traveler wants to go from post i to post j (where 
+𝑖<𝑗), they must choose a downstream post k to rent a canoe to.
+
+The traveler has two parts to their journey:
+
+Rent a canoe directly from i → k
+
+Then optimally travel from k → j
+
+The total cost of choosing intermediate post k is:
+
+𝐶[𝑖][𝑘]+opt[𝑘][𝑗]
+
+Since the traveler wants the minimum possible cost, the optimal 
+cost is the minimum over all valid choices of k:
+
+opt[𝑖][𝑗]=min⁡𝑖<𝑘≤𝑗(𝐶[𝑖][𝑘]+opt[𝑘][𝑗])
+
+
+
+Interpretation of the Formula:
+The best way to go from i to j depends on the best way to go 
+from k to j.
+
+Many different (i, j) pairs reuse the same (k, j) results.
+
+This is why dynamic programming is used — the Dynamic 
+Programming table stores all previously computed opt[k][j] 
+values so they don’t need to be recomputed.
+
+
+
+How It Works in the Program:
+opt[i][j] is the Dynamic Programming table storing the optimal costs.
+
+C[i][k] is the direct rental cost from the input file.
+
+The algorithm tries every possible intermediate post k.
+
+The best k is also stored in nextStop[i][j] so the path can be 
+reconstructed later.
+
+
+
+
+
+2. A theoretical analysis of the run time of your program, 
+based upon that recursive formula.
+
+The recursive formula for computing the optimal cost between 
+posts is:
+
+opt[𝑖][𝑗]=min⁡𝑖<𝑘≤𝑗(𝐶[𝑖][𝑘]+opt[𝑘][𝑗])
+
+This formula determines the runtime of the algorithm, because it dictates how 
+many subproblems exist, and how much work is required to solve each one.
+
+1. Number of Subproblems: 
+𝑂(𝑛^2)
+
+The Dynamic Programming table opt[i][j] contains entries for all pairs where:
+0≤𝑖<𝑗<𝑛
+
+This is the number of entries above the diagonal in an 
+𝑛×𝑛 matrix.
+
+That count is:
+(𝑛(𝑛−1))/2=𝑂(𝑛^2)
+So the algorithm must compute O(n^2) optimal-cost values.
+
+
+
+2. Work Per Subproblem: 
+𝑂(𝑛)
+To compute a single entry opt[i][j], the algorithm tries every possible 
+intermediate post 𝑘:
+𝑖<𝑘≤𝑗
+
+The number of possible k values is at most:
+(𝑗−𝑖)≤𝑛
+
+For each k, the algorithm performs:
+
+One addition: 
+𝐶[𝑖][𝑘]+opt[𝑘][𝑗]
+
+One comparison to maintain the minimum
+
+Both are constant‑time operations.
+
+Therefore, each subproblem requires O(n) work.
+
+
+
+3. Total Runtime: 
+𝑂(𝑛^3)
+
+Now combine:
+O(n^2) subproblems
+
+O(n) work per subproblem
+
+Thus:
+
+𝑇(𝑛)=𝑂(𝑛^2)×𝑂(𝑛)=𝑂(𝑛^3)
